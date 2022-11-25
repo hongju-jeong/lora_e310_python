@@ -19,23 +19,14 @@ ser = serial.Serial(
     baudrate = 115200
 )
 
-str = "emptyarray"
-send_buff = ""
-for i in range(18):
-    send_buff += str
-send_buff += "emptyra"
-print(len(send_buff))
-counter=0
-timestamp = datetime.datetime.now().timestamp()
+f = open("test.jpg", 'rb')
+
 while 1:
-    if(datetime.datetime.now().timestamp() - timestamp > 1):
-        print(counter)
-        timestamp = datetime.datetime.now().timestamp()
-        counter = 0
-    
-    ser.write(bytes(send_buff+'\n', 'utf-8'))
+    send_buff = f.read(188)
+    if len(send_buff) <= 0:
+        break    
+    ser.write(bytes(send_buff))
     ser.flush()
-    counter += 1
     
     time.sleep(0.015)
     
